@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+    >
+
+    <TextView
+        android:id="@+id/tv_status"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="拨打"
+            android:onClick="onClick"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/button"/>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="接听"
+            android:id="@+id/button2"
+            android:onClick="onClick"
+            android:layout_gravity="center_horizontal"/>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="拒绝"
+            android:id="@+id/button3"
+            android:onClick="onClick"
+            android:layout_gravity="center_horizontal"/>
+
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="挂断"
+            android:id="@+id/button4"
+            android:onClick="onClick"
+            android:layout_gravity="center_horizontal"/>
+    </LinearLayout>
+</LinearLayout>
+
