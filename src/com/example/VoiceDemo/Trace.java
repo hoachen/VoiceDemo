@@ -7,9 +7,9 @@ public class Trace {
 
 
     public static void i(String s) {
-        if (BuildConfig.DEBUG) {
+//        if (BuildConfig.DEBUG) {
             Log.i("tag", s);
-        }
+//        }
     }
 
 }

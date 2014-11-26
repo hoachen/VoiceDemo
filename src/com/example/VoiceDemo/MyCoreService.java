@@ -26,7 +26,9 @@ public class MyCoreService extends Service implements CallStateListener {
     public static final int WHAT_CALL_STATU_OFFLINE = 2000;
     public static final int WHAT_CALL_INCOMIING = 3000;
     public static final int WHAT_DIAL_FAILED = 4000;
-
+    public static final  int WHAT_ON_ALERTING=5000;
+    public static final int WHAT_HANG_UP=6000;
+    public static final int WHAT_ON_ANSWER=7000;
     @Override
     public IBinder onBind(Intent intent) {
         return myBinder;
@@ -58,7 +60,7 @@ public class MyCoreService extends Service implements CallStateListener {
          * @param ClientPwd  Client账号密码
          * @return void
          */
-        UCSService.connect(Contants.ACCOUNT_SID, Contants.ACCOUNT_TOKEN, Contants.CLIENT_NUMBER1, Contants.CLIENT_PWD1);
+        UCSService.connect(Contants.ACCOUNT_SID, Contants.ACCOUNT_TOKEN, Contants.CLIENT_NUMBER2, Contants.CLIENT_PWD2);
     }
 
 
@@ -78,7 +80,7 @@ public class MyCoreService extends Service implements CallStateListener {
     /**
      * 呼叫失败回调
      *
-     * @param callid 当前通话id（目前版本可以为空）
+         * @param callid 当前通话id（目前版本可以为空）
      * @param reason 呼叫失败的原因
      * @return void
      */
@@ -86,7 +88,10 @@ public class MyCoreService extends Service implements CallStateListener {
     @Override
     public void onDialFailed(String callid, UcsReason reason) {
         Trace.i("onDialFailed");
-
+        Message msg=mHandler.obtainMessage();
+        msg.obj=reason;
+        msg.what=WHAT_DIAL_FAILED;
+        mHandler.sendMessage(msg);
     }
 
     /**
@@ -104,10 +109,10 @@ public class MyCoreService extends Service implements CallStateListener {
         UCSCall.startRinging(true);//播放来电铃声
         Message msg = mHandler.obtainMessage();
         msg.what = WHAT_CALL_INCOMIING;
-        StringBuilder sb = new StringBuilder();
-        sb.append("通话id:").append(callid).append("，通话类型：")
-                .append(callType.equals("0") ? "VoIP语音来电" : "").append(",来电号码：").append(callerNumber);
-        msg.obj = sb.toString();
+        //StringBuilder sb = new StringBuilder();
+        //sb.append("通话id:").append(callid).append("，通话类型：")
+         //       .append(callType.equals("0") ? "VoIP语音来电" : "").append(",来电号码：").append(callerNumber);
+        msg.obj =callid;
         mHandler.sendMessage(msg);
     }
 
@@ -122,6 +127,7 @@ public class MyCoreService extends Service implements CallStateListener {
     @Override
     public void onHangUp(String callid, UcsReason reason) {
         Trace.i("onHangUp");
+        mHandler.sendEmptyMessage(WHAT_HANG_UP);
     }
 
 
@@ -135,6 +141,9 @@ public class MyCoreService extends Service implements CallStateListener {
 
     @Override
     public void onAlerting(String callid) {
+
+        mHandler.sendEmptyMessage(WHAT_ON_ALERTING);
+
         Trace.i("onAlerting");
     }
 
@@ -146,7 +155,11 @@ public class MyCoreService extends Service implements CallStateListener {
      */
 
     @Override
-    public void onAnswer(String callid) {
+    public void onAnswer(String callid)
+
+    {
+
+        mHandler.sendEmptyMessage(WHAT_ON_ANSWER);
         Trace.i("onAnswer");
     }
 
@@ -166,18 +179,19 @@ public class MyCoreService extends Service implements CallStateListener {
         }
 
         public void call(String calledNumner) {
+            Trace.i("calledNumber=="+calledNumner);
             UCSCall.dial(MyCoreService.this, CallType.VOIP, calledNumner);
         }
 
         public void answer(String callid) {
             UCSCall.answer(callid);
+            UCSCall.stopRinging();
         }
 
 
         public void hangUp(String callid) {
             UCSCall.hangUp(callid);
+            UCSCall.stopRinging();
         }
-
     }
-
 }

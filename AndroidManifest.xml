@@ -29,8 +29,8 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <service android:name=".MyCoreService"/>
         <service android:name="com.yzx.service.ConnectionControllerService"></service>
-
         <receiver android:name="com.yzx.service.AlarmReceiver"></receiver>
         <receiver android:name="com.yzx.service.MsgBackReceiver"></receiver>
     </application>

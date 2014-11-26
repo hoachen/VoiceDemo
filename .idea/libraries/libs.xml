@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="libs">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/libs/yunzhixun_audio_SDK_ver_1.2.0_release.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/httpmime-4.1.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
